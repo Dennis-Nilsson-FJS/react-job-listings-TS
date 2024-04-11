@@ -1,32 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { reduxSearch } from "../../../store/slices/JobSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../store/store";
 
 import { FaSearch } from "react-icons/fa";
 import "./Search.css";
 import Suggestions from "./Suggestions-component/Suggestions";
 
+interface Job {
+    occupation_group: {
+        label: string;
+    };
+}
+
 function Search() {
     const dispatch = useDispatch();
-    const [searchTerm, setSearchTerm] = useState("");
-    const [suggestions, setSuggestions] = useState([]);
-    const [isFocused, setIsFocused] = useState(false);
+    const initialSearchTerm = useSelector(
+        (state: RootState) => state.jobs.search
+    );
+    const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
+    const [suggestions, setSuggestions] = useState<string[]>([]);
+    const [isFocused, setIsFocused] = useState<boolean>(false);
 
     useEffect(() => {
-        let isMounted = true;
+        let isMounted: boolean = true;
 
-        const fetchSuggestions = async (inputValue) => {
+        const fetchSuggestions = async (inputValue: string) => {
             try {
                 const response = await fetch(
                     `https://jobsearch.api.jobtechdev.se/search?q=${inputValue}&limit=5`
                 );
-                const data = await response.json();
+                const data: { hits: Job[] } = await response.json();
 
                 const uniqueSuggestions = data.hits
-                    .map((job) =>
+                    .map((job: Job) =>
                         job.occupation_group.label.replace(/\s*m\.fl\.\s*$/, "")
                     )
-                    .filter((value, index, self) => {
+                    .filter((value: string, index: number, self: string[]) => {
                         return self.indexOf(value) === index;
                     });
 
@@ -49,22 +59,23 @@ function Search() {
         };
     }, [searchTerm]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
         if (e.target.value === "") setSuggestions([]);
     };
 
-    const handleSuggestionClick = (suggestion) => {
+    const handleSuggestionClick = (suggestion: string) => {
         dispatch(reduxSearch(suggestion));
-        setSearchTerm("");
+        setSearchTerm(suggestion);
+        setIsFocused(false);
         setSuggestions([]);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(reduxSearch(searchTerm));
         setSuggestions([]);
-        setSearchTerm("");
+        /* setSearchTerm(""); */
     };
 
     const handleInputFocus = () => {
@@ -72,7 +83,12 @@ function Search() {
     };
 
     const handleInputBlur = () => {
-        setIsFocused(false);
+        // Delay the blur event to check if the focus is on suggestion list
+        setTimeout(() => {
+            if (!isFocused) {
+                setIsFocused(false);
+            }
+        }, 0);
     };
 
     return (

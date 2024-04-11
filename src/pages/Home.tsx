@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import FilterRegion from "../components/Filter-component/FilterRegion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { reduxSearch } from "../store/slices/JobSlice";
 import { useDispatch } from "react-redux";
 import { FaSearch } from "react-icons/fa";
-import "./Search2.css";
 
 export default function Home() {
     const dispatch = useDispatch();
     const navigate = useNavigate(); // Using useNavigate hook
     const location = useLocation();
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState<string>("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formattedSearchTerm = searchTerm.split(" ").join(",");
         console.log(formattedSearchTerm);
@@ -21,7 +20,7 @@ export default function Home() {
         navigate("/joblisting"); // Navigate to /joblisting route
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
 

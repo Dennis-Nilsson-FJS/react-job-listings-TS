@@ -1,7 +1,12 @@
-import React from "react";
+
 import "./Suggestions.css";
 
-const Suggestions = ({ suggestions, onSuggestionClick }) => {
+interface SuggestionProps {
+    suggestions: string[];
+    onSuggestionClick: (suggestion: string) => void;
+}
+
+function Suggestions({ suggestions, onSuggestionClick }: SuggestionProps) {
     return (
         <ul id="suggestion-list">
             {suggestions.map((suggestion, index) => (
@@ -15,6 +20,6 @@ const Suggestions = ({ suggestions, onSuggestionClick }) => {
             ))}
         </ul>
     );
-};
+}
 
 export default Suggestions;

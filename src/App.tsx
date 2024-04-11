@@ -1,3 +1,4 @@
+//@ts-nocheck
 import "./App.css";
 import {
     BrowserRouter,
@@ -16,7 +17,7 @@ import Favorites from "./pages/Favorites";
 import Nav from "./components/Nav-component/Nav";
 
 function ProtectedRoute() {
-    const authContext = useContext(AuthContext);
+    const authContext = useContext<User | null>(AuthContext);
     const isAuth = authContext && authContext.user !== null;
 
     return isAuth ? <Outlet /> : <Navigate to="/signin" replace />;

@@ -1,6 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { Job } from "../../types/types";
 
-const initialState = {
+export interface JobState {
+    jobs: Job[];
+    search: string;
+    municipality: string;
+    employmentTypeFilter: string;
+}
+
+const initialState: JobState = {
     jobs: [],
     search: "",
     municipality: "",
@@ -11,16 +19,19 @@ export const jobsSlice = createSlice({
     name: "jobs",
     initialState,
     reducers: {
-        setReduxJobs: (state, action) => {
+        setReduxJobs: (state, action: PayloadAction<Job[]>) => {
             state.jobs = action.payload;
         },
-        reduxSearch: (state, action) => {
+        resetJobs: (state) => {
+            state.jobs = [];
+        },
+        reduxSearch: (state, action: PayloadAction<string>) => {
             state.search = action.payload;
         },
-        setReduxMunicipality: (state, action) => {
+        setReduxMunicipality: (state, action: PayloadAction<string>) => {
             state.municipality = action.payload;
         },
-        setEmploymentTypeFilter: (state, action) => {
+        setEmploymentTypeFilter: (state, action: PayloadAction<string>) => {
             // Skapa en ny reducer för att uppdatera filtreringsstatusen för heltid, deltid eller alla jobb
             state.employmentTypeFilter = action.payload;
         },
@@ -29,16 +40,16 @@ export const jobsSlice = createSlice({
                 case "heltid":
                     state.jobs.sort((a, b) => {
                         if (
-                            !a.working_hours_type.label &&
-                            !b.working_hours_type.label
+                            a.working_hours_type.label &&
+                            b.working_hours_type.label
                         ) {
-                            return 0; // Behåll ursprunglig ordning om båda är null
+                            return 0;
                         }
-                        if (!a.working_hours_type.label) {
-                            return 1; // Flytta jobb med null till slutet av listan
+                        if (a.working_hours_type.label) {
+                            return 1;
                         }
-                        if (!b.working_hours_type.label) {
-                            return -1; // Flytta jobb med null till slutet av listan
+                        if (b.working_hours_type.label) {
+                            return -1;
                         }
                         return b.working_hours_type.label.localeCompare(
                             a.working_hours_type.label
@@ -48,16 +59,16 @@ export const jobsSlice = createSlice({
                 case "deltid":
                     state.jobs.sort((a, b) => {
                         if (
-                            !a.working_hours_type.label &&
-                            !b.working_hours_type.label
+                            a.working_hours_type.label &&
+                            b.working_hours_type.label
                         ) {
-                            return 0; // Behåll ursprunglig ordning om båda är null
+                            return 0;
                         }
-                        if (!a.working_hours_type.label) {
-                            return 1; // Flytta jobb med null till slutet av listan
+                        if (a.working_hours_type.label) {
+                            return 1;
                         }
-                        if (!b.working_hours_type.label) {
-                            return -1; // Flytta jobb med null till slutet av listan
+                        if (b.working_hours_type.label) {
+                            return -1;
                         }
                         return a.working_hours_type.label.localeCompare(
                             b.working_hours_type.label
@@ -65,7 +76,7 @@ export const jobsSlice = createSlice({
                     });
                     break;
                 default:
-                    // Inga specifika sorteringar, behåll ursprunglig ordning
+                    // Ingen sortering krävs för andra fall, behåll ursprunglig ordning
                     break;
             }
         },
@@ -78,6 +89,7 @@ export const {
     setReduxMunicipality,
     setEmploymentTypeFilter,
     sortJobsByEmploymentType,
+    resetJobs,
 } = jobsSlice.actions;
 
 export default jobsSlice.reducer;

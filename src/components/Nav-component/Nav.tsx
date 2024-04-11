@@ -6,12 +6,13 @@ import JobChaserLogo from "./JobChaserLogo-component/JobChaserLogo";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { useDispatch } from "react-redux";
-import { setReduxMunicipality, reduxSearch } from "../../store/slices/JobSlice";
+import { setReduxMunicipality, reduxSearch,resetJobs } from "../../store/slices/JobSlice";
+import { User } from "firebase/auth";
 
 export default function Nav() {
     const dispatch = useDispatch();
-    const [user, setUser] = useState(null);
-    const location = useLocation(); // Get the current location using useLocation hook
+    const [user, setUser] = useState<User | null>(null);
+    const location = useLocation();
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -32,15 +33,13 @@ export default function Nav() {
     };
 
     useEffect(() => {
-        //Återställer region om man lämnar /joblisting
+        // Återställer region om man lämnar /joblisting
         if (location.pathname !== "/joblisting") {
             dispatch(setReduxMunicipality(""));
             dispatch(reduxSearch(""));
+            dispatch(resetJobs())
         }
     }, [location, dispatch]);
-
-
- 
 
     return (
         <nav

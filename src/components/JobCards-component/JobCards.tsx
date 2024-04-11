@@ -1,6 +1,22 @@
+import { useState } from "react";
 import { FaStar, FaRegStar, FaAngleDown, FaAngleUp } from "react-icons/fa";
 import "./JobCards.css";
-import { useState } from "react";
+
+type JobCardProps = {
+    id: number;
+    employer: string;
+    logo: string;
+    city: string;
+    occupation: string;
+    url: string;
+    backupURL: string;
+    headline: string;
+    postedAt: string;
+    description: string;
+    handleOpenCard: (id: number) => void;
+    isOpen: boolean;
+    employmentType: string;
+};
 
 function JobCards({
     id,
@@ -16,7 +32,7 @@ function JobCards({
     handleOpenCard,
     isOpen,
     employmentType,
-}) {
+}: JobCardProps) {
     const [isFavorite, setIsFavorite] = useState(false);
 
     const toggleFavorite = () => {
@@ -27,7 +43,7 @@ function JobCards({
         handleOpenCard(id);
     };
 
-    const isHTML = (str) => {
+    const isHTML = (str: string) => {
         const doc = new DOMParser().parseFromString(str, "text/html");
         return Array.from(doc.body.childNodes).some(
             (node) => node.nodeType === 1
@@ -35,7 +51,7 @@ function JobCards({
     };
 
     // Funktion för att göra länkar klickbara
-    const makeLinksClickable = (text) => {
+    const makeLinksClickable = (text: string) => {
         return text.replace(
             /((https?|ftp):\/\/[^\s/$.?#].[^\s]*)/g,
             ' <a class="regular-url" href="$1" target="_blank">$1</a>'
@@ -44,7 +60,7 @@ function JobCards({
 
     return (
         <>
-            <div className="card-container" id={id}>
+            <div className="card-container" id={id.toString()}>
                 <div className="basic-info-container">
                     <div className="job-info-container">
                         <a

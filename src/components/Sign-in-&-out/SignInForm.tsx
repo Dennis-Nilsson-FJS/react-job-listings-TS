@@ -1,8 +1,13 @@
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import "./ValidateUserForm.css";
+
+interface FormValues {
+    email: string;
+    password: string;
+}
 
 function SignInForm() {
     const navigate = useNavigate();
@@ -11,9 +16,9 @@ function SignInForm() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm<FormValues>();
 
-    const formSubmit = (data) => {
+    const formSubmit: SubmitHandler<FormValues> = (data) => {
         console.log("Form Submitted: ", data);
         const { email, password } = data;
 

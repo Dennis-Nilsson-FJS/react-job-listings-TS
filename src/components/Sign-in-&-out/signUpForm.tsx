@@ -1,8 +1,19 @@
-import { useForm } from "react-hook-form";
+import {
+    useForm,
+    SubmitHandler,
+    FieldValues,
+    UseFormRegister,
+} from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import "./ValidateUserForm.css";
+
+interface SignUpFormData {
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
 function SignUpForm() {
     const navigate = useNavigate();
@@ -12,14 +23,16 @@ function SignUpForm() {
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm();
+    } = useForm<SignUpFormData>();
 
-    const formSubmit = (data) => {
+    const formSubmit: SubmitHandler<SignUpFormData> = (data) => {
         console.log("Form Submitted: ", data);
         createUserWithEmailAndPassword(auth, data.email, data.password)
             .then(() => {
                 // Redirect to a new page after successful form submission
-                navigate("/signin");
+                setTimeout(() => {
+                    navigate("/");
+                }, 300);
             })
             .catch((error) => {
                 console.error("Error creating user:", error);

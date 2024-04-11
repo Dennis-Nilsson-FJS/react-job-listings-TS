@@ -1,3 +1,4 @@
+//@ts-nocheck
 import SignInForm from "../components/Sign-in-&-out/SignInForm";
 
 function SignInPage() {

@@ -1,4 +1,3 @@
-import React from "react";
 import "./JobChaserLogo.css";
 
 export default function JobChaserLogo() {

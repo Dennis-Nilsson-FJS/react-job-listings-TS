@@ -1,19 +1,28 @@
 import "./FilterRegion.css";
-import React, { useState } from "react";
-import regions from "../../regions/regions";
+import { useState, ChangeEvent } from "react";
+import regions from "../../regions/regions.json";
 import { useDispatch } from "react-redux";
 import {
     setReduxMunicipality,
     setEmploymentTypeFilter,
 } from "../../store/slices/JobSlice";
 
+interface Region {
+    [key: string]: {
+        name: string;
+        municipalities: {
+            [key: string]: string;
+        };
+    };
+}
+
 export default function FilterRegion() {
     const dispatch = useDispatch();
-    const [selectedRegion, setSelectedRegion] = useState("");
-    const [municipalities, setMunicipalities] = useState([]);
-    const [employmentType, setEmploymentType] = useState("");
+    const [selectedRegion, setSelectedRegion] = useState<string>("");
+    const [municipalities, setMunicipalities] = useState<string[]>([]);
+    const [employmentType, setEmploymentType] = useState<string>("");
 
-    const handleFilterChange = (event) => {
+    const handleFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedRegionValue = event.target.value;
         setSelectedRegion(selectedRegionValue);
 
@@ -22,7 +31,7 @@ export default function FilterRegion() {
             dispatch(setReduxMunicipality("")); // Nollställ municipality
         } else if (selectedRegionValue) {
             const municipalitiesArray = Object.keys(
-                regions[selectedRegionValue].municipalities
+                (regions as Region)[selectedRegionValue].municipalities
             );
             setMunicipalities(municipalitiesArray);
         } else {
@@ -30,12 +39,14 @@ export default function FilterRegion() {
         }
     };
 
-    const handleSelection = (e) => {
-        const selectedMunicipalityValue = e.target.value;
+    const handleSelection = (event: ChangeEvent<HTMLSelectElement>) => {
+        const selectedMunicipalityValue = event.target.value;
         dispatch(setReduxMunicipality(selectedMunicipalityValue));
     };
 
-    const handleEmploymentTypeChange = (event) => {
+    const handleEmploymentTypeChange = (
+        event: ChangeEvent<HTMLSelectElement>
+    ) => {
         const { value } = event.target;
         setEmploymentType(value);
         dispatch(setEmploymentTypeFilter(value)); // Skicka den valda filtreringsstatusen till Redux store
@@ -51,10 +62,10 @@ export default function FilterRegion() {
                 <option disabled value="">
                     Välj region
                 </option>
-                <option value="all">Alla ragioner</option>
+                <option value="all">Alla regioner</option>
                 {Object.keys(regions).map((region) => (
                     <option value={region} key={region}>
-                        {regions[region].name}
+                        {(regions as Region)[region].name}
                     </option>
                 ))}
             </select>
@@ -71,9 +82,8 @@ export default function FilterRegion() {
                     municipalities.map((municipality) => (
                         <option value={municipality} key={municipality}>
                             {
-                                regions[selectedRegion].municipalities[
-                                    municipality
-                                ]
+                                (regions as Region)[selectedRegion]
+                                    ?.municipalities[municipality]
                             }
                         </option>
                     ))
@@ -81,7 +91,7 @@ export default function FilterRegion() {
                     <option disabled>Inga tillgängliga kommuner</option>
                 )}
             </select>
-            {location.pathname === "/" ? (
+            {window.location.pathname === "/" ? (
                 ""
             ) : (
                 <select
