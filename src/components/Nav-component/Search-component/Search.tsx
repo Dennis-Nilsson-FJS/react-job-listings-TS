@@ -81,7 +81,7 @@ function Search() {
     const handleInputBlur = () => {
         setTimeout(() => {
             setIsFocused(false);
-        }, 300);
+        }, 150);
     };
     const handleClearInput = () => {
         setSearchTerm("");
@@ -89,12 +89,13 @@ function Search() {
     };
 
     return (
-        <form id="search-container" onSubmit={handleSubmit}>
-            <div
-                id="input-container"
-                onBlur={handleInputBlur}
-                onFocus={handleInputFocus}
-            >
+        <form
+            id="search-container"
+            onSubmit={handleSubmit}
+            onBlur={handleInputBlur}
+            onFocus={handleInputFocus}
+        >
+            <div id="input-container">
                 <input
                     className="search-input"
                     type="text"
