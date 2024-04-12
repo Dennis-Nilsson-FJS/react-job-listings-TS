@@ -1,17 +1,12 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { reduxSearch,sortJobsByEmploymentType } from "../../../store/slices/JobSlice";
+import { reduxSearch, resetFilteredJobs } from "../../../store/slices/JobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 
 import { FaSearch, FaTimes } from "react-icons/fa";
 import "./Search.css";
 import Suggestions from "./Suggestions-component/Suggestions";
-
-interface Job {
-    occupation_group: {
-        label: string;
-    };
-}
+import type { JobSuggestions } from "../../../types/types";
 
 function Search() {
     const dispatch = useDispatch();
@@ -30,10 +25,10 @@ function Search() {
                 const response = await fetch(
                     `https://jobsearch.api.jobtechdev.se/search?q=${inputValue}&limit=5`
                 );
-                const data: { hits: Job[] } = await response.json();
+                const data: { hits: JobSuggestions[] } = await response.json();
 
                 const uniqueSuggestions = data.hits
-                    .map((job: Job) =>
+                    .map((job: JobSuggestions) =>
                         job.occupation_group.label.replace(/\s*m\.fl\.\s*$/, "")
                     )
                     .filter((value: string, index: number, self: string[]) => {
@@ -73,6 +68,7 @@ function Search() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        dispatch(resetFilteredJobs());
         dispatch(reduxSearch(searchTerm));
         setSuggestions([]);
         /* setSearchTerm(""); */
@@ -83,17 +79,14 @@ function Search() {
     };
 
     const handleInputBlur = () => {
-        // Delay the blur event to check if the focus is on suggestion list
         setTimeout(() => {
-            if (!isFocused) {
-                setIsFocused(false);
-            }
-        }, 0);
+            setIsFocused(false);
+        }, 300);
     };
-    const handleClearInput=()=>{
-        setSearchTerm("")
-        dispatch(reduxSearch(""))
-    }
+    const handleClearInput = () => {
+        setSearchTerm("");
+        /* dispatch(reduxSearch("")); */
+    };
 
     return (
         <form id="search-container" onSubmit={handleSubmit}>

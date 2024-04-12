@@ -36,3 +36,8 @@ export type Region = {
         };
     };
 };
+export type JobSuggestions= {
+    occupation_group: {
+        label: string;
+    };
+}

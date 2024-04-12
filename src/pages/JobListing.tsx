@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import FilterRegion from "../components/Filter-component/FilterRegion";
 import JobCards from "../components/JobCards-component/JobCards";
 import {
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
 function JobListing() {
+    const location = useLocation();
     const dispatch = useDispatch();
     const limit = 100;
     const [loading, setLoading] = useState<boolean>(false);
@@ -30,6 +32,7 @@ function JobListing() {
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
+
             try {
                 let url = `https://jobsearch.api.jobtechdev.se/search?limit=${limit}`;
 
@@ -39,6 +42,14 @@ function JobListing() {
                 if (municipality) {
                     url += `&municipality=${municipality}`;
                 }
+               /*  if (
+                    employmentTypeFilter === "Heltid" ||
+                    employmentTypeFilter === "Deltid"
+                ) {
+                    console.log(employmentTypeFilter);
+                    url += `&working-hours-type=${employmentTypeFilter}`;
+                    console.log("url\n\n:", url);
+                } */
 
                 const res = await fetch(url);
                 const data = await res.json();
@@ -50,9 +61,12 @@ function JobListing() {
             }
         };
 
-        if (!searchQuery) {
+        /*  if (location.pathname==="/joblisting"&&!searchQuery) {
             return;
         } else if (searchQuery || municipality) {
+            fetchData();
+        } */
+        if (searchQuery || municipality) {
             fetchData();
         }
     }, [searchQuery, municipality, dispatch]);

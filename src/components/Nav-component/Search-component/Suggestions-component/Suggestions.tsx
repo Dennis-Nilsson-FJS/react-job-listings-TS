@@ -1,10 +1,9 @@
-
 import "./Suggestions.css";
 
-interface SuggestionProps {
+type SuggestionProps = {
     suggestions: string[];
     onSuggestionClick: (suggestion: string) => void;
-}
+};
 
 function Suggestions({ suggestions, onSuggestionClick }: SuggestionProps) {
     return (

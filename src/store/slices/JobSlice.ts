@@ -38,7 +38,7 @@ export const jobsSlice = createSlice({
             state.employmentTypeFilter = action.payload;
         },
         sortJobsByEmploymentType: (state) => {
-            const employmentType = state.employmentTypeFilter; 
+            const employmentType = state.employmentTypeFilter;
             if (employmentType === "Heltid") {
                 state.filteredJobs = state.jobs.filter(
                     (job) => job.working_hours_type.label === "Heltid"
@@ -48,11 +48,12 @@ export const jobsSlice = createSlice({
                     (job) => job.working_hours_type.label === "Deltid"
                 );
             } else {
-
                 state.filteredJobs = [];
             }
         },
-        
+        resetFilteredJobs: (state) => {
+            state.filteredJobs = [];
+        },
     },
 });
 
@@ -63,6 +64,7 @@ export const {
     setEmploymentTypeFilter,
     sortJobsByEmploymentType,
     resetJobs,
+    resetFilteredJobs,
 } = jobsSlice.actions;
 
 export default jobsSlice.reducer;
