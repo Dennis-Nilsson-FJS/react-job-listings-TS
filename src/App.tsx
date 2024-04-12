@@ -7,7 +7,7 @@ import {
     Navigate,
     Outlet,
 } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "./Context/AuthContext";
 import Home from "./pages/Home";
 import JobListing from "./pages/JobListing";

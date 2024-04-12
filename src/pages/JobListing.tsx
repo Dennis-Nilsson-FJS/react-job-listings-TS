@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import FilterContainer from "../components/Filter-component/FilterContainer";
 import JobCard from "../components/JobCard-component/JobCard";
+import JobCardSkeleton from "../components/Skeleton/JobCardSkeleton";
 import {
     setReduxJobs,
     sortJobsByEmploymentType,
@@ -46,7 +47,9 @@ function JobListing() {
             } catch (err) {
                 console.error("Error fetching data:", err);
             } finally {
-                setLoading(false);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 300);
             }
         };
         if (searchQuery || municipality) {
@@ -66,7 +69,7 @@ function JobListing() {
     return (
         <main>
             <FilterContainer />
-            {loading && <h1>Laddar...</h1>}
+            {loading && <JobCardSkeleton />}
             {!loading && jobs.length === 0 && <h1>Inget sökresultat</h1>}
             {!loading &&
                 (filteredJobs.length > 0

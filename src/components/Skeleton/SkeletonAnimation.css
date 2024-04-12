@@ -1,0 +1,64 @@
+.skeleton-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.skeleton-card {
+  min-height: 10rem;
+  width: 90%;
+  margin: 10px;
+  padding: 20px;
+  border: 2px solid #e0e0e0; /* Lätt grå kantlinje */
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.05);
+  animation: skeleton-pulse 1.5s infinite ease-in-out; /* Animering för pulserande effekt */
+}
+
+.skeleton-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-large-text {
+  width: 350px;
+  height: 23px; /* Justera höjden för att passa din design */
+  background: linear-gradient(to left, #d3d2d2 0%, #d3d2d2 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-text-wave 1.5s ease-in-out linear; /* Animering för vågeffekt */
+}
+
+.skeleton-small-text {
+  width: 300px; /* Justera bredden för att passa din design */
+  height: 22px; /* Justera höjden för att passa din design */
+  background: linear-gradient(to left, #d3d2d2 0%, #d3d2d2 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  animation: skeleton-text-wave 1.5s ease-in-out linear; /* Animering för vågeffekt */
+}
+
+@keyframes skeleton-pulse {
+  0% {
+    background-color: #f3f2f2; /* Ljusgrå färg */
+    
+  }
+  50% {
+    background-color: #eae8e8; /* Lite mörkare grå färg */
+  }
+  100% {
+    background-color: #f3f2f2; /* Tillbaka till ljusgrå färg */
+  }
+}
+
+@keyframes skeleton-text-wave {
+  0% {
+    background-position: 100% 0;
+    
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
