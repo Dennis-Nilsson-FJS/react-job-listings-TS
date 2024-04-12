@@ -3,7 +3,7 @@ import FilterRegion from "../components/Filter-component/FilterRegion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { reduxSearch } from "../store/slices/JobSlice";
 import { useDispatch } from "react-redux";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -22,6 +22,9 @@ export default function Home() {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
+    };
+    const handleClearInput = () => {
+        setSearchTerm("");
     };
 
     return (
@@ -50,6 +53,15 @@ export default function Home() {
                         value={searchTerm}
                         placeholder="Search..."
                     />
+                    {searchTerm && ( // Visa bara ikonen om inputrutan inte är tom
+                        <button
+                            className="clearButton"
+                            type="button"
+                            onClick={handleClearInput}
+                        >
+                            <FaTimes className="clearIcon" />
+                        </button>
+                    )}
                     <button id="search-button" type="submit">
                         <FaSearch id="search-icon" />
                     </button>

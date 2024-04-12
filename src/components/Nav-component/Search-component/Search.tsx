@@ -3,7 +3,7 @@ import { reduxSearch } from "../../../store/slices/JobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 import "./Search.css";
 import Suggestions from "./Suggestions-component/Suggestions";
 
@@ -90,6 +90,10 @@ function Search() {
             }
         }, 0);
     };
+    const handleClearInput=()=>{
+        setSearchTerm("")
+        dispatch(reduxSearch(""))
+    }
 
     return (
         <form id="search-container" onSubmit={handleSubmit}>
@@ -105,6 +109,15 @@ function Search() {
                     value={searchTerm}
                     placeholder="Search..."
                 />
+                {searchTerm && ( // Visa bara ikonen om inputrutan inte är tom
+                    <button
+                        className="clearButton"
+                        type="button"
+                        onClick={handleClearInput}
+                    >
+                        <FaTimes className="clearIcon" />
+                    </button>
+                )}
                 <button id="search-button" type="submit">
                     <FaSearch id="search-icon" />
                 </button>
