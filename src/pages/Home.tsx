@@ -7,17 +7,14 @@ import { FaSearch, FaTimes } from "react-icons/fa";
 
 export default function Home() {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Using useNavigate hook
+    const navigate = useNavigate();
     const location = useLocation();
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formattedSearchTerm = searchTerm.split(" ").join(",");
-        console.log(formattedSearchTerm);
         dispatch(reduxSearch(searchTerm));
-        setSearchTerm("");
-        navigate("/joblisting"); // Navigate to /joblisting route
+        navigate("/joblisting");
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +50,7 @@ export default function Home() {
                         value={searchTerm}
                         placeholder="Search..."
                     />
-                    {searchTerm && ( // Visa bara ikonen om inputrutan inte är tom
+                    {searchTerm && (
                         <button
                             className="clearButton"
                             type="button"

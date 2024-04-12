@@ -1,5 +1,9 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { reduxSearch, resetFilteredJobs } from "../../../store/slices/JobSlice";
+import {
+    reduxSearch,
+    resetFilteredJobs,
+    setEmploymentTypeFilter,
+} from "../../../store/slices/JobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 
@@ -71,6 +75,7 @@ function Search() {
         dispatch(resetFilteredJobs());
         dispatch(reduxSearch(searchTerm));
         setSuggestions([]);
+        dispatch(setEmploymentTypeFilter(""));
         /* setSearchTerm(""); */
     };
 

@@ -6,7 +6,7 @@ import JobChaserLogo from "./JobChaserLogo-component/JobChaserLogo";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { useDispatch } from "react-redux";
-import { setReduxMunicipality, reduxSearch,resetJobs } from "../../store/slices/JobSlice";
+import { setReduxMunicipality, reduxSearch,resetJobs,setEmploymentTypeFilter,resetFilteredJobs } from "../../store/slices/JobSlice";
 import { User } from "firebase/auth";
 
 export default function Nav() {
@@ -35,9 +35,11 @@ export default function Nav() {
     useEffect(() => {
         // Återställer region om man lämnar /joblisting
         if (location.pathname !== "/joblisting") {
+            dispatch(resetFilteredJobs())
             dispatch(setReduxMunicipality(""));
             dispatch(reduxSearch(""));
             dispatch(resetJobs())
+            dispatch(setEmploymentTypeFilter(""))
         }
     }, [location, dispatch]);
 

@@ -1,18 +1,21 @@
 import "./FilterRegion.css";
 import { useState, ChangeEvent } from "react";
 import regions from "../../regions/regions.json";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     setReduxMunicipality,
     setEmploymentTypeFilter,
 } from "../../store/slices/JobSlice";
 import type { Region } from "../../types/types";
+import { RootState } from "../../store/store";
 
 export default function FilterRegion() {
     const dispatch = useDispatch();
     const [selectedRegion, setSelectedRegion] = useState<string>("");
     const [municipalities, setMunicipalities] = useState<string[]>([]);
-    const [employmentType, setEmploymentType] = useState<string>("");
+    const employmentType = useSelector(
+        (state: RootState) => state.jobs.employmentTypeFilter
+    );
 
     const handleFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const selectedRegionValue = event.target.value;
@@ -36,12 +39,8 @@ export default function FilterRegion() {
         dispatch(setReduxMunicipality(selectedMunicipalityValue));
     };
 
-    const handleEmploymentTypeChange = (
-        event: ChangeEvent<HTMLSelectElement>
-    ) => {
-        const { value } = event.target;
-        setEmploymentType(value);
-        dispatch(setEmploymentTypeFilter(value)); // Skicka den valda filtreringsstatusen till Redux store
+    const handleEmploymentTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setEmploymentTypeFilter(e.target.value)); // Skicka den valda filtreringsstatusen till Redux store
     };
 
     return (
