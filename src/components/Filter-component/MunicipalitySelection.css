@@ -1,4 +1,4 @@
-.location-selection {
+.municipality-selection {
     padding: 8px 12px; /* Justera padding för att passa din design */
     font-size: 16px; /* Justera fontstorlek för att passa din design */
     border: 1px solid #ccc; /* Lägg till en enkel kantlinje */
@@ -7,12 +7,4 @@
     color: #333; /* Textfärg */
     outline: none; /* Ta bort den blå fokusramen */
     width: 180px; /* Justera bredden efter behov */
-}
-.selection-container {
-    width: 100%;
-    height: 38px;
-    gap: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }

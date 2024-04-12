@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import FilterRegion from "../components/Filter-component/FilterRegion";
+import FilterContainer from "../components/Filter-component/FilterContainer";
 import { useNavigate, useLocation } from "react-router-dom";
 import { reduxSearch } from "../store/slices/JobSlice";
 import { useDispatch } from "react-redux";
@@ -64,7 +64,7 @@ export default function Home() {
                     </button>
                 </div>
             </form>
-            <FilterRegion />
+            <FilterContainer />
         </main>
     );
 }

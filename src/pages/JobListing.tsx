@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import FilterRegion from "../components/Filter-component/FilterRegion";
-import JobCards from "../components/JobCards-component/JobCards";
+import FilterContainer from "../components/Filter-component/FilterContainer";
+import JobCard from "../components/JobCard-component/JobCard";
 import {
     setReduxJobs,
     sortJobsByEmploymentType,
@@ -65,13 +65,13 @@ function JobListing() {
 
     return (
         <main>
-            <FilterRegion />
+            <FilterContainer />
             {loading && <h1>Laddar...</h1>}
             {!loading && jobs.length === 0 && <h1>Inget sökresultat</h1>}
             {!loading &&
                 (filteredJobs.length > 0
                     ? filteredJobs.map((job, index: number) => (
-                          <JobCards
+                          <JobCard
                               employmentType={job.working_hours_type.label}
                               handleOpenCard={handleOpenCard}
                               isOpen={openCardId === index}
@@ -89,7 +89,7 @@ function JobListing() {
                           />
                       ))
                     : jobs.map((job, index: number) => (
-                          <JobCards
+                          <JobCard
                               employmentType={job.working_hours_type.label}
                               handleOpenCard={handleOpenCard}
                               isOpen={openCardId === index}

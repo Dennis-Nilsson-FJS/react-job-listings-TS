@@ -1,0 +1,12 @@
+.show-more-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    width: 105px;
+}
+
+.show-more-button:hover {
+    cursor: pointer;
+}

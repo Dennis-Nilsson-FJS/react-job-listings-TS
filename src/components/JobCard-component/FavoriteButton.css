@@ -1,0 +1,7 @@
+.star {
+    align-self: flex-end;
+}
+
+.star:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,22 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 10rem;
+    width: 90%;
+    background-color: #ffff;
+    border-radius: 8px;
+    border: 2px solid hsl(0, 0%, 90%);
+    box-shadow: 0px 16px 32px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.button-card-container {
+    margin: 16px 24px 16px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

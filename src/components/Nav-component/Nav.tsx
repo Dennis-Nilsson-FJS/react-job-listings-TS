@@ -2,7 +2,7 @@ import "./Nav.css";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Search from "./Search-component/Search";
-import JobChaserLogo from "./JobChaserLogo-component/JobChaserLogo";
+import JobChaserLogo from "./JobChaserLogo";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/firebase-config";
 import { useDispatch } from "react-redux";

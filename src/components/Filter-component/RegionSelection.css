@@ -1,0 +1,10 @@
+.region-selection {
+    padding: 8px 12px; /* Justera padding för att passa din design */
+    font-size: 16px; /* Justera fontstorlek för att passa din design */
+    border: 1px solid #ccc; /* Lägg till en enkel kantlinje */
+    border-radius: 8px; /* Runda kanterna */
+    background-color: #fff; /* Bakgrundsfärg */
+    color: #333; /* Textfärg */
+    outline: none; /* Ta bort den blå fokusramen */
+    width: 180px; /* Justera bredden efter behov */
+}

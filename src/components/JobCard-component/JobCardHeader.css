@@ -1,0 +1,44 @@
+.basic-info-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.job-info-container {
+    margin-top: 16px;
+    margin-left: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.headline-url {
+    font-size: 20px;
+    margin-bottom: 14px;
+    color: #3282b8;
+    text-decoration: none;
+}
+
+.headline-url:visited {
+    color: #0f1753;
+}
+
+.headline-url:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 2px;
+}
+
+hr {
+    display: none;
+}
+
+strong {
+    font-weight: 600;
+}
+
+.employer-name {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
