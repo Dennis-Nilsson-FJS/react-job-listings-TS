@@ -8,11 +8,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 
-
-
 function JobListing() {
     const dispatch = useDispatch();
-    const limit = 20;
+    const limit = 100;
     const [loading, setLoading] = useState<boolean>(false);
     const searchQuery: string = useSelector(
         (state: RootState) => state.jobs.search
@@ -21,6 +19,9 @@ function JobListing() {
         (state: RootState) => state.jobs.municipality
     );
     const jobs = useSelector((state: RootState) => state.jobs.jobs);
+    const filteredJobs = useSelector(
+        (state: RootState) => state.jobs.filteredJobs
+    );
     const [openCardId, setOpenCardId] = useState<number | null>(null);
     const employmentTypeFilter = useSelector(
         (state: RootState) => state.jobs.employmentTypeFilter
@@ -41,7 +42,6 @@ function JobListing() {
 
                 const res = await fetch(url);
                 const data = await res.json();
-                console.log(data.hits);
                 dispatch(setReduxJobs(data.hits));
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -50,7 +50,9 @@ function JobListing() {
             }
         };
 
-        if (searchQuery || municipality) {
+        if (!searchQuery) {
+            return;
+        } else if (searchQuery || municipality) {
             fetchData();
         }
     }, [searchQuery, municipality, dispatch]);
@@ -70,24 +72,43 @@ function JobListing() {
             {loading && <h1>Laddar...</h1>}
             {!loading && jobs.length === 0 && <h1>Inget sökresultat</h1>}
             {!loading &&
-                jobs.map((job, index: number) => (
-                    <JobCards
-                        employmentType={job.working_hours_type.label}
-                        handleOpenCard={handleOpenCard}
-                        isOpen={openCardId === index}
-                        id={index}
-                        key={job.id}
-                        employer={job.employer.name}
-                        logo={job.logo_url}
-                        city={job.workplace_address.municipality}
-                        occupation={job.occupation.label}
-                        url={job.application_details.url}
-                        backupURL={job.webpage_url}
-                        headline={job.headline}
-                        postedAt={job.publication_date.slice(0, 10)}
-                        description={job.description.text_formatted}
-                    />
-                ))}
+                (filteredJobs.length > 0
+                    ? filteredJobs.map((job, index: number) => (
+                          <JobCards
+                              employmentType={job.working_hours_type.label}
+                              handleOpenCard={handleOpenCard}
+                              isOpen={openCardId === index}
+                              id={index}
+                              key={job.id}
+                              employer={job.employer.name}
+                              logo={job.logo_url}
+                              city={job.workplace_address.municipality}
+                              occupation={job.occupation.label}
+                              url={job.application_details.url}
+                              backupURL={job.webpage_url}
+                              headline={job.headline}
+                              postedAt={job.publication_date.slice(0, 10)}
+                              description={job.description.text_formatted}
+                          />
+                      ))
+                    : jobs.map((job, index: number) => (
+                          <JobCards
+                              employmentType={job.working_hours_type.label}
+                              handleOpenCard={handleOpenCard}
+                              isOpen={openCardId === index}
+                              id={index}
+                              key={job.id}
+                              employer={job.employer.name}
+                              logo={job.logo_url}
+                              city={job.workplace_address.municipality}
+                              occupation={job.occupation.label}
+                              url={job.application_details.url}
+                              backupURL={job.webpage_url}
+                              headline={job.headline}
+                              postedAt={job.publication_date.slice(0, 10)}
+                              description={job.description.text_formatted}
+                          />
+                      )))}
         </main>
     );
 }

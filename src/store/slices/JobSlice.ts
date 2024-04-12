@@ -3,6 +3,7 @@ import type { Job } from "../../types/types";
 
 export interface JobState {
     jobs: Job[];
+    filteredJobs: Job[];
     search: string;
     municipality: string;
     employmentTypeFilter: string;
@@ -10,6 +11,7 @@ export interface JobState {
 
 const initialState: JobState = {
     jobs: [],
+    filteredJobs: [],
     search: "",
     municipality: "",
     employmentTypeFilter: "", // Lägg till en ny variabel för att spara filtreringsstatusen för heltid, deltid eller alla jobb
@@ -36,50 +38,21 @@ export const jobsSlice = createSlice({
             state.employmentTypeFilter = action.payload;
         },
         sortJobsByEmploymentType: (state) => {
-            switch (state.employmentTypeFilter) {
-                case "heltid":
-                    state.jobs.sort((a, b) => {
-                        if (
-                            a.working_hours_type.label &&
-                            b.working_hours_type.label
-                        ) {
-                            return 0;
-                        }
-                        if (a.working_hours_type.label) {
-                            return 1;
-                        }
-                        if (b.working_hours_type.label) {
-                            return -1;
-                        }
-                        return b.working_hours_type.label.localeCompare(
-                            a.working_hours_type.label
-                        );
-                    });
-                    break;
-                case "deltid":
-                    state.jobs.sort((a, b) => {
-                        if (
-                            a.working_hours_type.label &&
-                            b.working_hours_type.label
-                        ) {
-                            return 0;
-                        }
-                        if (a.working_hours_type.label) {
-                            return 1;
-                        }
-                        if (b.working_hours_type.label) {
-                            return -1;
-                        }
-                        return a.working_hours_type.label.localeCompare(
-                            b.working_hours_type.label
-                        );
-                    });
-                    break;
-                default:
-                    // Ingen sortering krävs för andra fall, behåll ursprunglig ordning
-                    break;
+            const employmentType = state.employmentTypeFilter; 
+            if (employmentType === "Heltid") {
+                state.filteredJobs = state.jobs.filter(
+                    (job) => job.working_hours_type.label === "Heltid"
+                );
+            } else if (employmentType === "Deltid") {
+                state.filteredJobs = state.jobs.filter(
+                    (job) => job.working_hours_type.label === "Deltid"
+                );
+            } else {
+
+                state.filteredJobs = [];
             }
         },
+        
     },
 });
 

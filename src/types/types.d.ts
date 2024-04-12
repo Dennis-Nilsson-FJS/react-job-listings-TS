@@ -12,6 +12,7 @@ export type Job = {
     };
     working_hours_type: {
         label: string;
+        concept_id: string;
     };
     occupation: {
         label: string;
@@ -24,5 +25,14 @@ export type Job = {
     publication_date: string;
     description: {
         text_formatted: string;
+    };
+};
+
+export type Region = {
+    [key: string]: {
+        name: string;
+        municipalities: {
+            [key: string]: string;
+        };
     };
 };

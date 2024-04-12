@@ -6,15 +6,7 @@ import {
     setReduxMunicipality,
     setEmploymentTypeFilter,
 } from "../../store/slices/JobSlice";
-
-interface Region {
-    [key: string]: {
-        name: string;
-        municipalities: {
-            [key: string]: string;
-        };
-    };
-}
+import type { Region } from "../../types/types";
 
 export default function FilterRegion() {
     const dispatch = useDispatch();
@@ -104,8 +96,8 @@ export default function FilterRegion() {
                         Anställningstyp
                     </option>
                     <option value="Alla">Alla</option>
-                    <option value="heltid">Heltid</option>
-                    <option value="deltid">Deltid</option>
+                    <option value="Heltid">Heltid</option>
+                    <option value="Deltid">Deltid</option>
                 </select>
             )}
         </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
-import { reduxSearch } from "../../../store/slices/JobSlice";
+import { reduxSearch,sortJobsByEmploymentType } from "../../../store/slices/JobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../store/store";
 
