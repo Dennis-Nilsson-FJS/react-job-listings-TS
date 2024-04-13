@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FilterContainer from "../components/Filter-component/FilterContainer";
 import JobCard from "../components/JobCard-component/JobCard";
+import BackToTopButton from "../components/BackToTopButton";
 import JobCardSkeleton from "../components/Skeleton/JobCardSkeleton";
+import { RootState } from "../store/store";
 import {
     setReduxJobs,
     sortJobsByEmploymentType,
 } from "../store/slices/JobSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/store";
 
 function JobListing() {
     const dispatch = useDispatch();
-    const limit = 100;
+    const limit = 10;
     const [loading, setLoading] = useState<boolean>(false);
     const searchQuery: string = useSelector(
         (state: RootState) => state.jobs.search
@@ -33,7 +34,7 @@ function JobListing() {
             setLoading(true);
 
             try {
-                let url = `https://jobsearch.api.jobtechdev.se/search?limit=${limit}`;
+                let url = `https://jobsearch.api.jobtechdev.se/search?offset=0&limit=${limit}`;
 
                 if (searchQuery) {
                     url += `&q=${searchQuery}`;
@@ -109,6 +110,7 @@ function JobListing() {
                               description={job.description.text_formatted}
                           />
                       )))}
+            <BackToTopButton />
         </main>
     );
 }

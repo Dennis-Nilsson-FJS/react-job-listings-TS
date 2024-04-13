@@ -7,6 +7,7 @@ export interface JobState {
     search: string;
     municipality: string;
     employmentTypeFilter: string;
+    offset: number;
 }
 
 const initialState: JobState = {
@@ -15,6 +16,7 @@ const initialState: JobState = {
     search: "",
     municipality: "",
     employmentTypeFilter: "", // Lägg till en ny variabel för att spara filtreringsstatusen för heltid, deltid eller alla jobb
+    offset: 0,
 };
 
 export const jobsSlice = createSlice({
