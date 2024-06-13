@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FilterContainer from "../components/Filter-component/FilterContainer";
 import JobCard from "../components/JobCard-component/JobCard";
-import BackToTopButton from "../components/BackToTopButton";
+import BackToTopButton from "../components/BackToTopButton/BackToTopButton";
 import JobCardSkeleton from "../components/Skeleton/JobCardSkeleton";
 import { RootState } from "../store/store";
 import {
